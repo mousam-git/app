@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Count from './components/Count';
-import EmpList from './components/EmpList';
-import Pagination from './components/Pagination';
+import EmpList from './components/Emp/EmpList';
+import Pagination from './components/Emp/Pagination';
 
 function App() {
   const apiUrl = 'https://608abddb737e470017b73d6e.mockapi.io/employees';
@@ -30,12 +31,16 @@ function App() {
   return (
     <div className="container">
       <Count />
-      {empData ? <EmpList empData={currentEmp} /> : <h1>Loading ...</h1>}
-      <Pagination
-        postPerPage={postPerPage}
-        totalPosts={empData.length}
-        paginate={paginate}
-      />
+      {empData.length > 0 ? (
+        <EmpList
+          empData={currentEmp}
+          postPerPage={postPerPage}
+          totalPosts={empData.length}
+          paginate={paginate}
+        />
+      ) : (
+        <h1>Loading ...</h1>
+      )}
     </div>
   );
 }
